@@ -12,13 +12,14 @@ resource "azurerm_service_plan" "example" {
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   os_type             = "Linux"
-  sku_name            = "B1"  # Correctly enclosed in double quotes
+  sku_name            = "B1"
 }
-resource "azurerm_app_service" "example" {
+
+resource "azurerm_linux_web_app" "example" {
   name                = "deployment-app"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  app_service_plan_id = azurerm_service_plan.example.id
+  service_plan_id     = azurerm_service_plan.example.id  # Corrected reference here
 
   site_config {
     linux_fx_version = "NODE|18"
