@@ -8,21 +8,18 @@ resource "azurerm_resource_group" "example" {
 }
 
 resource "azurerm_service_plan" "example" {
-  name                = "example-appserviceplan"
-  location            = azurerm_resource_group.example.location
+  name                = "example"
   resource_group_name = azurerm_resource_group.example.name
-   os_type             = "Linux"
-   sku_name = P1V3
+  location            = azurerm_resource_group.example.location
+  os_type             = "Linux"
+  sku_name            = "P1v2"
 }
 
-
-resource "azurerm_app_service" "example" {
-  name                = "deployment-app"
-  location            = azurerm_resource_group.example.location
+resource "azurerm_linux_web_app" "example" {
+  name                = "example"
   resource_group_name = azurerm_resource_group.example.name
-  app_service_plan_id = azurerm_service_plan.example.id
+  location            = azurerm_service_plan.example.location
+  service_plan_id     = azurerm_service_plan.example.id
 
-  site_config {
-    dotnet_framework_version = "v4.0"
-  }
+  site_config {}
 }
